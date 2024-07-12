@@ -113,21 +113,27 @@ function isTaskDone(todo){
 
 alert("This is a test alert");
 
-const getCompletedTasks
+// const getCompletedTasks
 
+function fib(){
+    let first = 0
+    let second = 1
+    let res;
 
-let first = 0
-let second = 1
-let res;
-
-for(let i = 0; i<=10; i++){
-    // console.log(i)
-    if (i < 2){
-        console.log(i)
-    }else{
-        res = first + second
-        first  = second
-        second = res
-        console.log(res)
+    for(let i = 0; i<=10; i++){
+        // console.log(i)
+        if (i < 2){
+            console.log(i)
+        }else{
+            res = first + second
+            first  = second
+            second = res
+            console.log(res)
+        }
     }
+
 }
+
+fib()
+
+
