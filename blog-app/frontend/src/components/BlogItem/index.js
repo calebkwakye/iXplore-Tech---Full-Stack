@@ -1,7 +1,6 @@
 import React from "react";
 
 import BlogItemText from "../BlogItemText";
-import Categories from "../Categories";
 import "../../App.css";
 import "./index.css";
 
