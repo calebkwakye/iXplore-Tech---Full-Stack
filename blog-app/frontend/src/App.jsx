@@ -8,14 +8,15 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 
 import HomePage from "./Pages/Home";
 import BlogsPage from "./Pages/Blogs";
+import CategoriesPage from "./Pages/Categories";
 
 
 function App() {
   return (
-    <BlogsPage />
     // <div className="App">
-    //   <BlogsPage />
-    //   {/* < BlogsPage /> */}
+      // <BlogsPage />
+      <CategoriesPage />
+      // <HomePage/>
     // </div>
   );
   
