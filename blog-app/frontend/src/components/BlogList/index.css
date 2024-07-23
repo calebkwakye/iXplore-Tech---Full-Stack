@@ -2,4 +2,12 @@
     display: "grid";
     grid-template-columns: 30% 30% 30%;
     column-gap: 5%;
+}
+
+
+@media (max-width: 768px) {
+  .blog-grid {
+    display: block;
   }
+}
+

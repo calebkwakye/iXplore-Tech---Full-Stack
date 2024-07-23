@@ -35,6 +35,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import HomePage from "./Pages/Home";
 import BlogsPage from "./Pages/Blogs";
+import BlogPage from "./Pages/Blog";
 import CategoriesPage from "./Pages/Categories";
 import LoginPage from "./Pages/Login";
 import RegisterPage from "./Pages/Register";
@@ -42,7 +43,7 @@ import AboutPage from "./Pages/About";
 import ProfilePage from "./Pages/Profile";
 
 
-const router = createBrowserRouter([
+const routes = [
   {
     path: "/",
     element: <HomePage />,
@@ -59,34 +60,20 @@ const router = createBrowserRouter([
     path: "/blogs/:categoryId?",
     element: <BlogsPage />,
   },
-
   {
-    path: "/login",
-    element: <LoginPage />,
+    path: "/blog/:blogId",
+    element: <BlogPage />,
   },
-
-  {
-    path: "/register",
-    element: <RegisterPage />,
-  },
-
   {
     path: "/profile",
     element: <ProfilePage />,
   },
+];
 
-  {
-    path: "/about",
-    element: <AboutPage />,
-  },
-
-  
-]);
+const router = createBrowserRouter(routes);
 
 function App() {
   return <RouterProvider router={router} />;
 }
 
 export default App;
-
-
