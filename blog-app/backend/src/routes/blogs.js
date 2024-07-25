@@ -27,8 +27,19 @@ router.put("/:id", (req, res) => {
   blogsController.updateBlogById(req, res);
 });
 
-router.delete("/:id", (req, res) => {
-  blogsController.deleteBlogById(req, res);
-});
+router.delete(
+  "/:id",
+  (req, res, next) => {
+    // TODO:
+    // Make sure the the user has the right header params to be able to execute this protected route
+    //if not good
+    // res.status(401).json({message:"User unAuthorized"})
+    //if al is good
+    //next()
+  },
+  (req, res) => {
+    blogsController.deleteBlogById(req, res);
+  }
+);
 
 module.exports = router;

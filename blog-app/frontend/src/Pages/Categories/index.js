@@ -77,54 +77,53 @@
 //   );
 // }
 
+import React, { useState, useEffect } from "react";
 
-import React, { useEffect, useState } from "react";
+import "./index.css";
 
 import Navbar from "../../components/Navbar";
 import Heading from "../../components/Heading";
-import CategoryList from "../../components/CategoriesList";
+import Subheading from "../../components/Subheading";
+import CategoriesList from "../../components/CategoriesList";
 import Footer from "../../components/Footer";
 import Loader from "../../components/Loader";
 
 import categoryService from "../../services/categoryService";
+import AddEditCategoryModal from "../../components/AddEditCategoryModal";
 import SuccessToast from "../../components/SuccessToast";
 import ErrorToast from "../../components/ErrorToast";
-import AddEditCategoryModal from "../../components/AddEditCategoryModal";
 import DeleteCategoryModal from "../../components/DeleteCategoryModal";
 
 export default function CategoriesPage() {
-  const [categories, setCategories] = useState([]);
+  const [isSuccess, setIsSuccess] = useState();
+  const [isError, setIsError] = useState();
+  const [message, setMessage] = useState();
   const [addCategory, setAddCategory] = useState();
   const [editCategory, setEditCategory] = useState();
   const [deleteCategory, setDeleteCategory] = useState();
-
-  const [loading, setLoading] = useState();
-  const [message, setMessage] = useState();
-  const [isSuccess, setIsSuccess] = useState();
-  const [isError, setIsError] = useState();
+  const [loading, setLoading] = useState(false);
+  const [categories, setCategories] = useState();
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchPageData = async () => {
       try {
         setLoading(true);
-        const categoriesRes = await categoryService.fetchCategories();
-        setCategories(categoriesRes.data);
+        const categories = await categoryService.getCategories();
+        setCategories(categories.data);
         setLoading(false);
       } catch (err) {
-        setIsError(true);
-        setMessage(err);
+        console.log(err);
         setLoading(false);
       }
     };
-
-    fetchData();
+    fetchPageData();
   }, []);
 
   const onCategoryAdd = () => {
     setAddCategory({
       title: "",
       description: "",
-      color: "#000000",
+      color: "",
     });
   };
 
@@ -142,7 +141,7 @@ export default function CategoriesPage() {
       setIsSuccess(true);
       setMessage(newCategory.message);
       setCategories((prev) => {
-        return [...prev, newCategory];
+        return [...prev, newCategory.data];
       });
     } catch (err) {
       setIsError(true);
@@ -170,10 +169,12 @@ export default function CategoriesPage() {
 
   const removeCategory = async (category) => {
     try {
-      const newBlog = await categoryService.deleteCategory(category.id);
+      const res = await categoryService.deleteCategory(category);
       setIsSuccess(true);
-      setMessage(newBlog.message);
-      setCategories((prev) => prev.filter((x) => x.id !== category.id));
+      setMessage(res.message);
+      setCategories((prev) => {
+        return prev.filter((x) => x.id !== category.id);
+      });
     } catch (err) {
       setIsError(true);
       setMessage(err);
@@ -183,7 +184,7 @@ export default function CategoriesPage() {
 
   const AddButton = () => {
     return (
-      <button className="btn btn-outline-dark h-75" onClick={onCategoryAdd}>
+      <button className="btn btn-outline-dark my-4" onClick={onCategoryAdd}>
         ADD CATEGORY
       </button>
     );
@@ -198,17 +199,18 @@ export default function CategoriesPage() {
       <Navbar />
       <div className="container">
         <Heading />
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <p className="page-subtitle">Categories</p>
+        <div className="flex-sub-heading">
+          <Subheading subHeading={"Categories"} />
           <AddButton />
         </div>
-        <CategoryList
+
+        <CategoriesList
           categories={categories}
           onEdit={onCategoryUpdate}
           onDelete={onCategoryDelete}
-        ></CategoryList>
+        />
+        <Footer />
       </div>
-      <Footer />
       <AddEditCategoryModal
         addCategory={addCategory}
         editCategory={editCategory}
@@ -222,7 +224,9 @@ export default function CategoriesPage() {
       <DeleteCategoryModal
         deleteCategory={deleteCategory}
         removeCategory={removeCategory}
-        onClose={() => setDeleteCategory(null)}
+        onClose={() => {
+          setDeleteCategory(null);
+        }}
       />
       <SuccessToast
         show={isSuccess}

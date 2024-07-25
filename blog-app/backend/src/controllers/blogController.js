@@ -14,9 +14,13 @@ const createBlog = async (req, res) => {
       image: req.body.image,
     });
     const newBlog = await blog.save();
-    const blogRes = await Blog.findById(newBlog._id).populate({
-      path: "categoryIds",
-    });
+    const blogRes = await Blog.findById(newBlog._id)
+      .populate({
+        path: "authorId",
+      })
+      .populate({
+        path: "categoryIds",
+      });
     res.status(201).json({ message: "Created blog!", data: blogRes });
   } catch (error) {
     const message = error?.message ? error.message : "Internal server error";
@@ -26,9 +30,13 @@ const createBlog = async (req, res) => {
 
 const getBlogs = async (req, res) => {
   try {
-    const blogsRed = await Blog.find().populate({
-      path: "categoryIds",
-    });
+    const blogsRed = await Blog.find()
+      .populate({
+        path: "authorId",
+      })
+      .populate({
+        path: "categoryIds",
+      });
     res.status(200).send({ message: "Return all blogs!", data: blogsRed });
   } catch (error) {
     const message = error?.message ? error.message : "Internal server error";
@@ -38,9 +46,13 @@ const getBlogs = async (req, res) => {
 
 const getBlogById = async (req, res) => {
   try {
-    const blogsRed = await Blog.findById(req.params.id).populate({
-      path: "categoryIds",
-    });
+    const blogsRed = await Blog.findById(req.params.id)
+      .populate({
+        path: "authorId",
+      })
+      .populate({
+        path: "categoryIds",
+      });
     res.status(200).send({ message: "Return blog by ID!", data: blogsRed });
   } catch (error) {
     const message = error?.message ? error.message : "Internal server error";
@@ -54,9 +66,13 @@ const getBlogByCategoryId = async (req, res) => {
     if (req.params.id != "null" && req.params.id != "undefined") {
       filter = { categoryIds: req.params.id };
     }
-    const blogsRed = await Blog.find(filter).populate({
-      path: "categoryIds",
-    });
+    const blogsRed = await Blog.find(filter)
+      .populate({
+        path: "authorId",
+      })
+      .populate({
+        path: "categoryIds",
+      });
     res.status(200).send({ message: "Return blog by ID!", data: blogsRed });
   } catch (error) {
     const message = error?.message ? error.message : "Internal server error";
@@ -70,9 +86,13 @@ const getBlogByAuthorId = async (req, res) => {
     if (req.params.id != "null" && req.params.id != "undefined") {
       filter = { "author.id": req.params.id };
     }
-    const blogsRed = await Blog.find(filter).populate({
-      path: "categoryIds",
-    });
+    const blogsRed = await Blog.find(filter)
+      .populate({
+        path: "authorId",
+      })
+      .populate({
+        path: "categoryIds",
+      });
     res.status(200).send({ message: "Return blog by ID!", data: blogsRed });
   } catch (error) {
     const message = error?.message ? error.message : "Internal server error";
@@ -96,9 +116,13 @@ const updateBlogById = async (req, res) => {
       blog.content = req?.body?.content || blog.content;
       const updatedBlog = await (
         await blog.save()
-      ).populate({
-        path: "categoryIds",
-      });
+      )
+        .populate({
+          path: "authorId",
+        })
+        .populate({
+          path: "categoryIds",
+        });
       res.status(200).json({ message: "Blog updated!", data: updatedBlog });
     } else {
       res.status(404).json({ message: "Blog not found!" });

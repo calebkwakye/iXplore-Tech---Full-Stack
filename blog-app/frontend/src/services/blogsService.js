@@ -85,12 +85,10 @@ const getBlogsByAuthorId = async (authorId) => {
       },
     }
   );
-
   if (!response.ok) {
     let res = await response.json();
     throw res;
   }
-
   const responseData = await response.json();
   return responseData;
 };

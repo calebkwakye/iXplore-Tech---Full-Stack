@@ -45,7 +45,7 @@ import ErrorToast from "../../components/ErrorToast";
 import Loader from "../../components/Loader";
 
 import blogsService from "../../services/blogsService";
-import categoriesService from "../../services//categoryService";
+import categoriesService from "../../services/categoryService";
 
 export default function HomePage() {
   const [loading, setLoading] = useState();
