@@ -74,6 +74,8 @@ export default function HomePage() {
     fetchBlogs();
   }, []);
 
+  console.log('blogs is: ', blogs)
+
   if (loading) {
     return <Loader />;
   }
@@ -83,7 +85,7 @@ export default function HomePage() {
       <div className="container">
         <Heading />
         <Subheading subHeading={"Recent blogs"} />
-        <BlogGrid blogs={blogs} />
+        {/* <BlogGrid blogs={blogs} /> */}
         <Subheading subHeading={"Categories"} />
         <CategoriesList categories={categories} />
       </div>
