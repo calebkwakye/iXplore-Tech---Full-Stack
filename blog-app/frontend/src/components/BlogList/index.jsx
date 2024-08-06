@@ -1,10 +1,22 @@
 import React from "react";
 import BlogItem from "../BlogItem";
-import PropTypes from "prop-types";
 
 import "./index.css";
+import { useDispatch, useSelector } from "react-redux";
 
-export default function BlogList({ blogs, onBlogEdit, onBlogDelete }) {
+import { setEditBlog, setDeleteBlog } from "../../features/blogsSlice";
+
+export default function BlogList() {
+  const dispatch = useDispatch();
+  const { blogs } = useSelector((state) => state.blogs);
+
+  const onBlogEdit = (blog) => {
+    dispatch(setEditBlog(blog));
+  };
+  const onBlogDelete = (blog) => {
+    dispatch(setDeleteBlog(blog));
+  };
+
   if (!blogs || !blogs.length) {
     return null;
   }
@@ -26,11 +38,46 @@ export default function BlogList({ blogs, onBlogEdit, onBlogDelete }) {
   );
 }
 
-BlogList.prototype = {
-  blogs: PropTypes.array.isRequired,
-  onBlogEdit: PropTypes.func,
-  onBlogDelete: PropTypes.func,
-};
+BlogList.prototype = {};
+
+
+
+
+
+
+// import React from "react";
+// import BlogItem from "../BlogItem";
+// import PropTypes from "prop-types";
+
+// import "./index.css";
+
+// export default function BlogList({ blogs, onBlogEdit, onBlogDelete }) {
+//   if (!blogs || !blogs.length) {
+//     return null;
+//   }
+
+//   return (
+//     <div className="blog-grid">
+//       {blogs?.map((blog, index) => {
+//         return (
+//           <BlogItem
+//             key={index}
+//             blog={blog}
+//             imageOrientation={"top"}
+//             onBlogEdit={onBlogEdit}
+//             onBlogDelete={onBlogDelete}
+//           />
+//         );
+//       })}
+//     </div>
+//   );
+// }
+
+// BlogList.prototype = {
+//   blogs: PropTypes.array.isRequired,
+//   onBlogEdit: PropTypes.func,
+//   onBlogDelete: PropTypes.func,
+// };
 
 // import React from "react";
 // import PropTypes from "prop-types"
