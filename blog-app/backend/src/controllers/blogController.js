@@ -1,13 +1,13 @@
 const Blog = require("../models/Blog");
-const {
-  uploadToGoogleCloudStorage,
-} = require("../services/google-cloud-storage");
+// const {
+//   uploadToGoogleCloudStorage,
+// } = require("../services/google-cloud-storage");
 
 const createBlog = async (req, res) => {
   try {
-    if (req?.file?.path) {
-      imageURL = await uploadToGoogleCloudStorage(req?.file?.path);
-    }
+    // if (req?.file?.path) {
+    //   imageURL = await uploadToGoogleCloudStorage(req?.file?.path);
+    // }
     const user = req.user;
     console.log(user);
     const categoryIds = JSON.parse(req.body.categories).map((category) => {
@@ -19,7 +19,9 @@ const createBlog = async (req, res) => {
       content: JSON.parse(req.body.content),
       categoryIds: categoryIds,
       authorId: req.body.authorId,
-      image: imageURL ? imageURL : "",
+      image: req?.file?.path
+      ? req?.protocol + "://" + req?.headers?.host + "/" + req.file.path
+      : "",
     });
     const newBlog = await blog.save();
     const blogRes = await Blog.findById(newBlog._id)
@@ -124,7 +126,10 @@ const updateBlogById = async (req, res) => {
         blog.categoryIds;
       blog.title = req?.body?.title || blog.title;
       blog.description = req?.body?.description || blog.description;
-      blog.image = req?.body?.image || blog.image;
+      // blog.image = req?.body?.image || blog.image;
+      (blog.image = req?.file?.path
+        ? req?.protocol + "://" + req?.headers?.host + "/" + req.file.path
+        : blog.image),
       blog.content = req?.body?.content || blog.content;
       const updatedBlog = await (
         await blog.save()

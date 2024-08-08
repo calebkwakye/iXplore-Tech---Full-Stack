@@ -24,7 +24,7 @@ export default function BlogItemText({ headerFontSize, blog }) {
       >
         {blog.title}
       </p>
-      <p style={{ fontSize: "16px", color: "#667085", textAlign: "left" }}>
+      <p className="snippet" style={{ fontSize: "16px", textAlign: "left" }}>
         {blog.description.substring(0, 100)}...
       </p>
       <Categories blog={blog} />

@@ -6,7 +6,9 @@
     width: 50%;
   }
   
-  .author {
+  .dark-mode .author {
+    background: #000;
+    color: #000;
   }
   .author:hover {
     cursor: pointer;
