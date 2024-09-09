@@ -9,7 +9,7 @@ export default function Navbar() {
     <nav className="navbar navbar-expand-lg">
       <div style={{ margin: "0px 5%" }} className="container-fluid">
         <Link className="navbar-brand" to="/">
-          iX Software Engineering Blog
+          Fueling Your Tech Curiosity
         </Link>
         <button
           className="navbar-toggler"
